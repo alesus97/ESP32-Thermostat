@@ -4,7 +4,7 @@
 #define INCREASE_BUTTON_PIN 26
 #define DECREASE_BUTTON_PIN 25
 #define RELAY_PIN 32
-#define LED_PIN 34
+#define LED_PIN 14
 #define DHT_PIN 33
 
 
@@ -33,9 +33,21 @@ unsigned long button_time = 0;
 unsigned long last_button_time = 0;
 
 bool expiredTimer = false;
-float prova = 0;
+
+
 // -------------------------- ISR ------------------------
 void IRAM_ATTR onTimer() {
+  Serial.println(dht.readTemperature());
+
+  if (thermostat.target_temp > dht.readTemperature()) {
+
+    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(LED_PIN, HIGH);
+
+  } else {
+    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(LED_PIN, LOW);
+  }
   expiredTimer = true;
 }
 
@@ -86,11 +98,12 @@ void setup() {
   attachInterrupt(decreaseButton.PIN, decreaseISR, RISING);
 
   pinMode(RELAY_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 
   dht.begin();
 
   // Leggi qua per info sul clock e sul prescaler https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
-  My_timer = timerBegin(0, 9600, true); //2 minuti
+  My_timer = timerBegin(0, 9600, true);  //2 minuti
   timerAttachInterrupt(My_timer, &onTimer, true);
   timerAlarmWrite(My_timer, 1000000, true);
   timerAlarmEnable(My_timer);  //Just Enable
@@ -100,27 +113,4 @@ void setup() {
 
 // -------------------------- LOOP ------------------------
 
-void loop() {
-
-
-  //By the way, an interrupt function must be as small as possible :
-  //you should try rewriting it just for toggling a flag. Then
-  //you check the flag in your loop and do the rest of the current ISR tasks if the flag is ON.
-
-  if (expiredTimer) {
-    //UPDATE DISPLAY INFO
-    Serial.println(dht.readTemperature());
-
-    if (thermostat.target_temp > dht.readTemperature()) {
-      
-      digitalWrite(RELAY_PIN, HIGH);
-      //  digitalWrite(led, HIGH);
-
-    } else {
-      digitalWrite(RELAY_PIN, LOW);
-      //  digitalWrite(led, LOW);
-    }
-    
-    expiredTimer = false;
-  }
-}
+void loop() {}
