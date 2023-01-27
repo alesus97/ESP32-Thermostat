@@ -5,37 +5,27 @@
 
 // -------------------------- ISR ------------------------
 void IRAM_ATTR onTimer() {
-  //Aggiornamento display
+  
   expiredTimer = true;
 
   if (thermostat.target_temp > dht.readTemperature()) {
 
-    // Serial.println(digitalRead(RELAY_PIN));
-
     if (digitalRead(RELAY_PIN) != 1) {
       digitalWrite(RELAY_PIN, HIGH);
-      digitalWrite(LED_PIN, HIGH);
       onActivationThermostat = true;
     }
-    // Mostra sul display un messaggio di accensione del riscaldamento
 
-  } else {
-
-    // Serial.println(digitalRead(RELAY_PIN));
-
-    if (digitalRead(RELAY_PIN) != 0) {
+  } else if (digitalRead(RELAY_PIN) != 0) {
+  
       digitalWrite(RELAY_PIN, LOW);
-      digitalWrite(LED_PIN, LOW);
       onDeactivationThermostat = true;
-    }
-    // Mostra sul display un messaggio di spegnimento del riscaldamento
   }
 }
 
 void IRAM_ATTR increaseISR() {
   button_time = millis();
 
-  if (button_time - last_button_time > 250) {
+  if (button_time - last_button_time > debounceDelay) {
     if (thermostat.target_temp < 30) {
       thermostat.target_temp++;
       increaseButton.pressed = true;
@@ -52,13 +42,11 @@ void IRAM_ATTR increaseISR() {
 
 void IRAM_ATTR decreaseISR() {
   button_time = millis();
-  if (button_time - last_button_time > 250) {
+  if (button_time - last_button_time > debounceDelay) {
     if (thermostat.target_temp > 10) {
       decreaseButton.pressed = true;
       last_button_time = button_time;
       thermostat.target_temp--;
-      /* Serial.print("Target Temperature: ");
-      Serial.println(thermostat.target_temp); */
 
     } else {
       decreaseButton.pressed = true;
@@ -81,19 +69,18 @@ void setup() {
   attachInterrupt(increaseButton.PIN, increaseISR, RISING);
   attachInterrupt(decreaseButton.PIN, decreaseISR, RISING);
 
-  //Abilitazione Relay e Led in output
+  //Abilitazione Relay in output
   pinMode(RELAY_PIN, OUTPUT);
-  pinMode(LED_PIN, OUTPUT);
 
   dht.begin();
 
   // Configurazione Timer 0 dell'ESP32 per generare un'interruzione ogni 2 minuti
 
   // Leggi qua per info sul clock e sul prescaler https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
-  My_timer = timerBegin(0, /*9600*/ 400, true);  //2 minuti
+  My_timer = timerBegin(0, 80, true);
   timerAttachInterrupt(My_timer, &onTimer, true);
-  timerAlarmWrite(My_timer, 1000000, true);
-  timerAlarmEnable(My_timer);  //Just Enable
+  timerAlarmWrite(My_timer, /*120000000*/ 3000000, true);  //2 minuti
+  timerAlarmEnable(My_timer);                  //Just Enable
 
   //Configurazione del display
   lcd.init();
@@ -135,8 +122,6 @@ void LCDdisplayTargetTemp(int targetTemp) {
   lcd.print(targetTemp);
   lcd.print(" \337C");
 }
-
-
 
 void LCDdisplayOnRiscaldamentoActivation() {
   lcd.clear();

@@ -7,7 +7,6 @@
 #define INCREASE_BUTTON_PIN 26
 #define DECREASE_BUTTON_PIN 25
 #define RELAY_PIN 32
-#define LED_PIN 14
 #define DHT_PIN 33
 
 
@@ -38,6 +37,7 @@ LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 //variables to keep track of the timing of recent interrupts
 unsigned long button_time = 0;
 unsigned long last_button_time = 0;
+unsigned long debounceDelay = 250;
 
 
 // LCD change message variables
