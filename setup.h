@@ -34,13 +34,13 @@ Thermostat thermostat = { target_temp };
 LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 
-//variables to keep track of the timing of recent interrupts
+//Variabili per realizzare il debouncing
 unsigned long button_time = 0;
 unsigned long last_button_time = 0;
 unsigned long debounceDelay = 250;
 
 
-// LCD change message variables
+// Variabili di stato per l'aggiornamento del display LCD
 bool expiredTimer = false;
 bool onActivationThermostat = false;
 bool onDeactivationThermostat = false;

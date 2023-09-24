@@ -74,13 +74,11 @@ void setup() {
 
   dht.begin();
 
-  // Configurazione Timer 0 dell'ESP32 per generare un'interruzione ogni 2 minuti
-
-  // Leggi qua per info sul clock e sul prescaler https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
+  // Configurazione Timer 0 dell'ESP32 per generare un'interruzione ogni secondo
   My_timer = timerBegin(0, 80, true);
   timerAttachInterrupt(My_timer, &onTimer, true);
-  timerAlarmWrite(My_timer, /*120000000*/ 3000000, true);  //2 minuti
-  timerAlarmEnable(My_timer);                  //Just Enable
+  timerAlarmWrite(My_timer, 1000000, true);     //1 secondo
+  timerAlarmEnable(My_timer);                  
 
   //Configurazione del display
   lcd.init();
@@ -105,7 +103,7 @@ void LCDdisplayTemp() {
   lcd.clear();
   lcd.home();
   lcd.print("Temp: ");
-  lcd.print(dht.readTemperature());  //Forse qua ci va il valore di temp letto nell'interrupt e non una nuova lettura
+  lcd.print(dht.readTemperature()); 
   lcd.print(" \337C");
   lcd.setCursor(0, 1);
   lcd.print("Target: ");
@@ -140,20 +138,12 @@ void LCDdisplayOnRiscaldamentoDeactivation() {
 }
 
 
-
 // -------------------------- LOOP ------------------------
 void loop() {
 
-  /*
-  
-  Nota: L'aggiornamento del display non può avvenire nelle ISR dei bottoni o nella timer-interrupt, perchè... 
-  ...The problem is almost certainly that the LCD library uses interrupts and they are disabled when in an ISR. Have the ISR set a flag variable and do the LCD output in loop()
-  approfondimento a: https://forum.arduino.cc/t/lcd-display-inside-a-timerinterrupt/962576/3
-  
-  Una soluzione può essere quella di still use the timer to make the measurements at specific time intervals then display the results in loop() when a new measurement has been made
-  You will, of course, be writing the loop() function such that it does not block the execution of the program which would prevent the timely display of the values
+Serial.println("prova");
 
- */
+delay(1000);
 
   //Se si verifica una delle due interruzioni dei bottoni, allora devo aggiornare lo schermo mostrando il nuovo valore di temperatura target
   if (increaseButton.pressed || decreaseButton.pressed) {
@@ -163,7 +153,6 @@ void loop() {
     delay(2000);
     LCDdisplayTemp();
   }
-
 
   //Quando scade la timer interrupt, aggiorno il display mostrando i nuovi valori di temperatura.
   if (expiredTimer) {
