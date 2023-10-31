@@ -1,6 +1,7 @@
 # ESP32 Thermostat
 
-![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/thermostat.jpg)
+![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png)
+![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/RisultatoFinale.jpg)
 
 ## Introduction
 
@@ -40,6 +41,9 @@ git clone https://github.com/alesus97/ESP32-Thermostat.git
 4. Open the Serial Monitor to view the IP address assigned to your ESP32.
 
 5. Access the thermostat interface via a web browser using the IP address.
+
+### Hardware connections
+![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/CollegamentiHardware.png)
 
 ### Configuration
 Connect the device to a power supply and wait for bootstrap session.
