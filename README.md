@@ -1,8 +1,7 @@
 # ESP32 Thermostat
 
-<img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png" width="300">
-![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png)
-![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/RisultatoFinale.jpg)
+<img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png" width="400">
+<img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/RisultatoFinale.jpg" width="400">
 
 ## Introduction
 
