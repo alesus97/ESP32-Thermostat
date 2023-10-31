@@ -37,15 +37,15 @@ This is an ESP32-based thermostat project designed to control heating or cooling
 git clone https://github.com/alesus97/ESP32-Thermostat.git
 ```
 
-1. Open the project in your preferred IDE (e.g., Arduino IDE, PlatformIO).
+2. Open the project in your preferred IDE (e.g., Arduino IDE, PlatformIO).
 
-2. Connect the hardware components as per the schematic provided in the docs directory.
+3. Connect the hardware components as per the schematic provided in the docs directory.
 
-3. Upload the sketch to your ESP32 board.
+4. Upload the sketch to your ESP32 board.
 
-4. Open the Serial Monitor to view the IP address assigned to your ESP32.
+5. Open the Serial Monitor to view the IP address assigned to your ESP32.
 
-5. Access the thermostat interface via a web browser using the IP address.
+6. Access the thermostat interface via a web browser using the IP address.
 
 ### Hardware connections
 ![ESP32 Thermostat](https://github.com/alesus97/ESP32-Thermostat/blob/main/images/CollegamentiHardware.png)
