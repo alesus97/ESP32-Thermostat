@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png" width="400"></td>
+    <td><img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/ProgettoCSD_Completo1000x1000.png" width="430"></td>
     <td><img src="https://github.com/alesus97/ESP32-Thermostat/blob/main/images/RisultatoFinale.jpg" width="400"></td>
   </tr>
 </table>
